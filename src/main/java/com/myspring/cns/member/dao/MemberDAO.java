@@ -1,19 +1,11 @@
 package com.myspring.cns.member.dao;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.List;
-
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.myspring.cns.member.service.MemberService;
 import com.myspring.cns.member.vo.MemberVO;
 import com.myspring.cns.member.vo.TokenVO;
 
@@ -26,13 +18,7 @@ public class MemberDAO {
 	private SqlSession sqlSession;
 	@Autowired
 	private TokenVO myTokenVO;
-	@Autowired
-	private MemberVO memberVO;
-
-
 	public int insertMember(MemberVO membervo) {
-		MemberVO resultMVO = new MemberVO();
-
 		int result = sqlSession.insert("mapper.member.insertMember", membervo);
 //		sqlSession.
 		logger.info(membervo.getId()+"");

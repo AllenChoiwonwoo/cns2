@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.myspring.cns.board.vo.BoardVO;
-import com.myspring.cns.member.dao.MemberDAO;
 import com.myspring.cns.member.vo.TokenVO;
 
 @Repository("BoardDAO")
@@ -49,9 +48,9 @@ public class BoardDAO {
 	}
 
 
-	public List getMyAllPost(TokenVO tokenVO) {
+	public List<BoardVO> getMyAllPost(TokenVO tokenVO) {
 //		logger.info(""+userId);
-		List resultList = sqlSession.selectList(mybatisRocation+ "selectMyAllPost", tokenVO);
+		List<BoardVO> resultList = sqlSession.selectList(mybatisRocation+ "selectMyAllPost", tokenVO);
 		return resultList;
 	}
 

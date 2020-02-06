@@ -1,15 +1,12 @@
 package com.myspring.cns.member.service;
 
-import java.util.List;
 import java.util.Random;
 
-import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.myspring.cns.member.controller.MemberController;
 import com.myspring.cns.member.dao.MemberDAO;
 import com.myspring.cns.member.vo.MemberVO;
 import com.myspring.cns.member.vo.TokenVO;
@@ -28,7 +25,6 @@ public class MemberService {
 	
 	
 	public TokenVO authorizeMember(MemberVO membervo) {
-//		memberDAO.insertMember(membervo);
 		MemberVO resultVO = memberDAO.selectOneUserInfoByUsernamePassword(membervo);
 		tokenVO = memberDAO.getUserToken(resultVO.getId());
 		logger.info(""+resultVO.getId()+"");
@@ -42,12 +38,11 @@ public class MemberService {
 			String token = resultVO.getUsername()+randomSM();
 			tokenVO.setToken(token);
 			tokenVO.setUserId(resultVO.getId());
-			int result = memberDAO.insertToken(tokenVO);
 			tokenVO = memberDAO.getUserToken(tokenVO.getUserId());
 			
 		}else {
 			logger.info("auth 한 회원");
-//			System.out.println("auth 한 회원");
+//			
 			tokenVO.getUserId();
 			
 		}

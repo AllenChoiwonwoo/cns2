@@ -13,11 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
-
 import com.myspring.cns.board.service.BoardService;
 import com.myspring.cns.board.vo.BoardVO;
-import com.myspring.cns.member.controller.MemberController;
 import com.myspring.cns.member.dao.MemberDAO;
 import com.myspring.cns.member.vo.MemberVO;
 import com.myspring.cns.member.vo.RestReturnMemberVO;
@@ -52,7 +49,7 @@ public class BoardController {
 		String accessToken = request.getHeader("accesstoken");
 		logger.info("accessToken = "+accessToken);
 //		System.out.println("accessToken = "+accessToken);
-		//2. 토큰과 매칭되는 userid를 받아온다.
+		//2. 토큰과 매칭되는 아이디를 받아온다.
 		
 		
 		boardVO = boardService.addNewPost(accessToken, boardVO);
@@ -74,10 +71,10 @@ public class BoardController {
 		
 		/***
 		 * 1. 요청을 받는다.
-		 * 2. db 에서 모든 글들을 id의 내림차순으로 가져온다.
+		 * 2. 데이터베이스 에서 모든 글들을 id의 내림차순으로 가져온다.
 		 * 3. 화면에 뿌려준다.
 		 */
-		List boardvoList = boardService.getAllPost();
+		List<BoardVO> boardvoList = boardService.getAllPost();
 		logger.info(boardvoList.toString());
 		rrmvo.setData(boardvoList);
 		
@@ -93,17 +90,12 @@ public class BoardController {
 			logger.info("accessToken = "+accessToken);
 //			boardVO = boardService.addNewPost(accessToken, boardVO);
 		
-			List myPostList = boardService.getMyAllPost(accessToken);
+			List<BoardVO> myPostList = boardService.getMyAllPost(accessToken);
 			rrmvo.setData(myPostList);
 		
 		return rrmvo;
 	}
-//	@RequestMapping(value = "/post/detail/{id}", method=RequestMethod.GET)
-//	public RestReturnMemberVO getOnePostById(
-//			HttpServletRequest request, HttpServletResponse response) {
-//		
-//		return rrmvo;
-//	}
+
 	@RequestMapping(value = "/post/{id}", method=RequestMethod.GET)
 	public RestReturnMemberVO getOnePostById(
 			@PathVariable("id") int id,

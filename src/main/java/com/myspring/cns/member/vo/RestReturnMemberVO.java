@@ -2,8 +2,6 @@ package com.myspring.cns.member.vo;
 
 import org.springframework.stereotype.Component;
 
-import com.myspring.cns.board.vo.BoardVO;
-
 @Component("RestReturnMemberVO")
 public class RestReturnMemberVO {
 	

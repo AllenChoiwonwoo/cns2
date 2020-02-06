@@ -10,9 +10,7 @@ import org.springframework.stereotype.Service;
 import com.myspring.cns.board.dao.BoardDAO;
 import com.myspring.cns.board.vo.BoardVO;
 import com.myspring.cns.member.dao.MemberDAO;
-import com.myspring.cns.member.service.MemberService;
 import com.myspring.cns.member.vo.MemberVO;
-import com.myspring.cns.member.vo.RestReturnMemberVO;
 import com.myspring.cns.member.vo.TokenVO;
 
 @Service("BoardService")
@@ -29,8 +27,8 @@ public class BoardService {
 	private BoardDAO boardDAO;
 	@Autowired
 	private MemberDAO memberDAO;
-	@Autowired
-	private RestReturnMemberVO rrmvo;
+//	@Autowired
+//	private RestReturnMemberVO rrmvo;
 	
 	
 	
@@ -72,7 +70,7 @@ public class BoardService {
 	private List<BoardVO> setMemberVOtoUserInBoardVOList(List<BoardVO> listBVO){
 		int i=0;
 		for (BoardVO bvo : listBVO) {
-//			int gotUserId = bvo.getUserId();
+
 			memberVO = memberDAO.getUserInfoById(bvo.getUserId()+"");
 			logger.info(memberVO.toString());
 			memberVO.setPassword(null);

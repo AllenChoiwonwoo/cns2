@@ -1,9 +1,6 @@
 package com.myspring.cns.member.vo;
 
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestBody;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Component("TokenVO2")
 public class TokenVO2 {
