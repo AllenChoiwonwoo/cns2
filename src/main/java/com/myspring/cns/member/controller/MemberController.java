@@ -5,9 +5,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.myspring.cns.member.service.MemberService;
 import com.myspring.cns.member.vo.MemberVO;
@@ -30,9 +33,9 @@ public class MemberController {
 	@Autowired
 	TokenVO tokenVO;
 	@Autowired
-	RestReturnMemberVO rrmvo;
+	RestReturnMemberVO restReturnMemberVO;
 	@Autowired
-	RestReturnTokenVO rrtvo;
+	RestReturnTokenVO restReturnTokenVO;
 	
 	@RequestMapping(value = "/user", method = RequestMethod.POST)
 	public RestReturnMemberVO signup(
@@ -48,29 +51,33 @@ public class MemberController {
 		MemberVO memberVO = memberService.addMember(membervo);
 		memberVO.setPassword(null);
 
-		rrmvo.setCode(200);
-		rrmvo.setMessage("Success");
-		rrmvo.setData(memberVO);
-		return rrmvo;
+		restReturnMemberVO.setCode(200);
+		restReturnMemberVO.setMessage("Success");
+		restReturnMemberVO.setData(memberVO);
+		return restReturnMemberVO;
 		
 	}
 	
 	@RequestMapping(value = "/user", method = RequestMethod.GET)
 	public RestReturnMemberVO selectUserInfo(
 //			@RequestBody TokenVO2 tokenvo2,
+			@RequestHeader(value="accesstoken", required = false) String accesstoken,
+//			@CookieValue(value="accesstoken", required = false) String accesstoken,
+			@RequestParam("id") String id,
+//			@Requset
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		logger.info(" user - get. selectUserInfo 메서도 호출 됨 ");
-		String id = request.getParameter("id");
+//		String id = request.getParameter("id");
 //		Long long_id = Long.parseUnsignedLong(id);
 		
 		MemberVO memVO = memberService.getUserInfoById(id);
 		
 		
-		rrmvo.setData(memVO);
-		rrmvo.setCode(200);
-		rrmvo.setMessage("Success");
-		return rrmvo;
+		restReturnMemberVO.setData(memVO);
+		restReturnMemberVO.setCode(200);
+		restReturnMemberVO.setMessage("Success");
+		return restReturnMemberVO;
 
 	}
 	
@@ -94,11 +101,11 @@ public class MemberController {
 			logger.info( tokenVO.toString());
 			logger.info( membervo.toString());
 
-			rrtvo.setData(tokenVO);
-			rrtvo.setCode(200);
-			rrtvo.setMessage("Success");
+			restReturnTokenVO.setData(tokenVO);
+			restReturnTokenVO.setCode(200);
+			restReturnTokenVO.setMessage("Success");
 
-			return rrtvo;
+			return restReturnTokenVO;
 	}
 	
 	

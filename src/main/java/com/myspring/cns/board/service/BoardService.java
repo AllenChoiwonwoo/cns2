@@ -27,14 +27,9 @@ public class BoardService {
 	private BoardDAO boardDAO;
 	@Autowired
 	private MemberDAO memberDAO;
-//	@Autowired
-//	private RestReturnMemberVO rrmvo;
-	
-	
 	
 	
 	public BoardVO addNewPost(String accessToken, BoardVO bvo) {
-		// TODO Auto-generated method stub
 		TokenVO tokenvo = memberDAO.selectUserIdByToken(accessToken);
 		logger.info("!!!!  "+tokenvo.toString());
 		bvo.setUserId(tokenvo.getUserId());
@@ -43,15 +38,11 @@ public class BoardService {
 		logger.info("생성된 포스트 id 값 = "+boardId);
 		boardVO = boardDAO.selectOnePostById(boardId);
 		logger.info("boardVO = "+boardVO.toString());
-//		rrmvo.setCode(200);
-//		rrmvo.setMessage("Success");
-//		rrmvo.setData(boardVO);
 		return boardVO;
 	}
 
 
 	public List<BoardVO> getAllPost() {
-		// TODO Auto-generated method stub
 		List<BoardVO> resultList = boardDAO.selectAllPost();
 		resultList = setMemberVOtoUserInBoardVOList(resultList);
 		return resultList;
@@ -59,7 +50,7 @@ public class BoardService {
 
 
 	public List<BoardVO> getMyAllPost(String accessToken) {
-		// TODO Auto-generated method stub
+
 		tokenVO = memberDAO.selectUserIdByToken(accessToken);
 		logger.info(tokenVO.toString());
 		List<BoardVO> myPostList = boardDAO.getMyAllPost(tokenVO);
@@ -88,7 +79,7 @@ public class BoardService {
 	}
 
 	public BoardVO getOnePostById(int id) {
-		// TODO Auto-generated method stub
+
 		boardVO = boardDAO.selectOnePostById(id);
 		boardVO = setMemberVOtoUserInBoardVO(boardVO);
 		logger.info(".getOnePostById = "+boardVO);

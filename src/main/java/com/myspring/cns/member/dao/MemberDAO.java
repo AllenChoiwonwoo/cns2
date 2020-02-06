@@ -49,7 +49,7 @@ public class MemberDAO {
 			System.out.println("dat.getusertoken = " +tokenVO.toString());
 			tokenVO.setUserId(id);
 		} catch (Exception e) {
-			// TODO: handle exception
+
 			e.printStackTrace();
 //			System.out.println("에러가 발생했습니다. !!!!!!!!!");
 			logger.info("에러 발생, 에러를 발생시켰습니다");
@@ -62,7 +62,7 @@ public class MemberDAO {
 	}
 
 	public TokenVO selectUserIdByToken(String accessToken) {
-		// TODO Auto-generated method stub
+
 		myTokenVO = sqlSession.selectOne("mapper.member.selectUserIdByToken", accessToken);
 		return myTokenVO;
 	}

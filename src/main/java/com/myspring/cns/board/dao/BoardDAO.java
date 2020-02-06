@@ -42,27 +42,22 @@ public class BoardDAO {
 		return boardVO;
 	}
 	public List<BoardVO> selectAllPost() {
-		// TODO Auto-generated method stub
 		List<BoardVO> resultList = sqlSession.selectList(mybatisRocation+"selectAllPost");
 		return resultList;
 	}
 
 
 	public List<BoardVO> getMyAllPost(TokenVO tokenVO) {
-//		logger.info(""+userId);
 		List<BoardVO> resultList = sqlSession.selectList(mybatisRocation+ "selectMyAllPost", tokenVO);
 		return resultList;
 	}
 
 	public int deleteOnePostById(int id) {
-		// TODO Auto-generated method stub
 		int result = sqlSession.delete(mybatisRocation+"deleteOnePostById", id);
 		return result;
 	}
 
 	public int updateOnePostById(BoardVO boardVO2) {
-		// TODO Auto-generated method stub
-		
 		return sqlSession.update(mybatisRocation+"updateOnePostById", boardVO2);
 	}
 	

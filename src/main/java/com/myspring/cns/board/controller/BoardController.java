@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,32 +38,33 @@ public class BoardController {
 	@Autowired
 	TokenVO tokenVO;
 	@Autowired
-	RestReturnMemberVO rrmvo;
+	RestReturnMemberVO restReturnMemberVO;
 	
 	
 	@RequestMapping(value = "/post", method=RequestMethod.POST)
 		public RestReturnMemberVO writePost(
 				@RequestBody BoardVO boardVO,
+				@CookieValue(value="accesstoken", required = false) String accesstoken,
 				HttpServletRequest request, HttpServletResponse response) {
 		logger.info("boardVO = "+boardVO);
 		//1.토큰을 받아온다.
-		String accessToken = request.getHeader("accesstoken");
-		logger.info("accessToken = "+accessToken);
+//		String accessToken = request.getHeader("accesstoken");
+		logger.info("accessToken = "+accesstoken);
 //		System.out.println("accessToken = "+accessToken);
 		//2. 토큰과 매칭되는 아이디를 받아온다.
 		
 		
-		boardVO = boardService.addNewPost(accessToken, boardVO);
+		boardVO = boardService.addNewPost(accesstoken, boardVO);
 		//3. db.post 에 데이터를 넣는다. 그리고 post의 id를 받아온다.
 		
 		// 4. post. id 를 통해서 해당 low의 데이터를 전부 받아온다.
 		
 		// 5. api 요구사항에 맞게 객체에 데이터들을 담아 return 한다.
-		rrmvo.setCode(200);
-		rrmvo.setMessage("Success");
-		rrmvo.setData(boardVO);
+		restReturnMemberVO.setCode(200);
+		restReturnMemberVO.setMessage("Success");
+		restReturnMemberVO.setData(boardVO);
 				
-		return rrmvo;
+		return restReturnMemberVO;
 	}
 	@RequestMapping(value = "/post", method=RequestMethod.GET)
 	public RestReturnMemberVO getAllPost(
@@ -76,24 +78,23 @@ public class BoardController {
 		 */
 		List<BoardVO> boardvoList = boardService.getAllPost();
 		logger.info(boardvoList.toString());
-		rrmvo.setData(boardvoList);
+		restReturnMemberVO.setData(boardvoList);
 		
-		return rrmvo;
+		return restReturnMemberVO;
 	}
 	
 	@RequestMapping(value = "/post/my", method=RequestMethod.GET)
 	public RestReturnMemberVO getMyAllPost(
-//			@RequestBody BoardVO boardVO,
+			@CookieValue(value="accesstoken", required = false) String accesstoken,
 			HttpServletRequest request, HttpServletResponse response) {
 			
-			String accessToken = request.getHeader("accesstoken");
-			logger.info("accessToken = "+accessToken);
-//			boardVO = boardService.addNewPost(accessToken, boardVO);
+//			String accessToken = request.getHeader("accesstoken");
+			logger.info("accessToken = "+accesstoken);
 		
-			List<BoardVO> myPostList = boardService.getMyAllPost(accessToken);
-			rrmvo.setData(myPostList);
+			List<BoardVO> myPostList = boardService.getMyAllPost(accesstoken);
+			restReturnMemberVO.setData(myPostList);
 		
-		return rrmvo;
+		return restReturnMemberVO;
 	}
 
 	@RequestMapping(value = "/post/{id}", method=RequestMethod.GET)
@@ -102,8 +103,8 @@ public class BoardController {
 			HttpServletRequest request, HttpServletResponse response) {
 			
 		myBoardVO = boardService.getOnePostById(id);
-		rrmvo.setData(myBoardVO);
-		return rrmvo;
+		restReturnMemberVO.setData(myBoardVO);
+		return restReturnMemberVO;
 	}
 	
 	@RequestMapping(value = "/post/{id}", method=RequestMethod.DELETE)
@@ -112,8 +113,8 @@ public class BoardController {
 			HttpServletRequest request, HttpServletResponse response) {
 			
 		int result = boardService.deleteOnePostById(id);
-		rrmvo.setData(result);
-		return rrmvo;
+		restReturnMemberVO.setData(result);
+		return restReturnMemberVO;
 	}
 
 	@RequestMapping(value = "/post", method=RequestMethod.PUT)
@@ -122,8 +123,8 @@ public class BoardController {
 			HttpServletRequest request, HttpServletResponse response) {
 		logger.info("/post, put 호출됨 " );
 		int result = boardService.editOnePostById(boardVO);
-		rrmvo.setData(result);
-		return rrmvo;
+		restReturnMemberVO.setData(result);
+		return restReturnMemberVO;
 	}
 	// put , /post/detail/{id} 부터 하면 된다.
 			
