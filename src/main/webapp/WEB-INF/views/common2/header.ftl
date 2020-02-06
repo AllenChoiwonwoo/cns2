@@ -1,0 +1,23 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+	<div class="container">
+		<a class="navbar-brand" href="/">Kwikker</a>
+		<#if user??>
+		<script>
+		alert("if user가 true 면 발동");
+		</script>
+		<div class="row">
+			<button class="btn btn-secondary mx-3" id="create_btn" data-toggle="modal"
+			data-target="#create_post_modal">Create Post</button>
+			<button class="btn" id="header_logout_btn">Logout</button>
+		</div>
+		<#else>
+		<script>
+		alert("if user가 False 면 발동");
+		</script>
+		<div class="row">
+			<a href="/signup"><button class="btn btn-secondary mr-3" id="header_signup_btn">Sign Up</button></a>
+			<a href="/login"><button class="btn btn-secondary" id="header_login_btn">Login</button></a>
+		</div>
+		</#if>
+	</div>
+</nav>
