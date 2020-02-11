@@ -64,6 +64,25 @@
 		where token=#{token}
 	]]>
   </select>
+  <insert id="insertFollowInfo"  parameterType="Map" >
+		<![CDATA[
+		 insert into follow(followee_id, follower_id)
+		 values( #{followee}, #{follower})
+		]]>
+		<!-- <selectKey resultType="int" keyProperty="id" order="AFTER">
+       		 SELECT LAST_INSERT_ID()
+    	</selectKey> -->
+	</insert>
+	<delete id="deleteFollowInfo"  parameterType="map">
+	<![CDATA[
+		delete from follow
+		where
+		followee_id = #{followee}
+		and follower_id = #{follower}
+
+	]]>      
+  </delete>
+
   
   
   <!-- <select id="selectToken"  resultType="tokenVO"   parameterType="String" >

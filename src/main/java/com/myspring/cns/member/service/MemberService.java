@@ -83,6 +83,20 @@ public static String randomSM() {
 		
 	}
 
+public int doFollow(String accesstoken, int followeeId) {
+	// TODO Auto-generated method stub
+	tokenVO = memberDAO.selectUserIdByToken(accesstoken);
+	int result = memberDAO.insertFollowInfo(tokenVO.getUserId(), followeeId);
+	return result;
+}
+
+public int undoFollow(String accesstoken, int followeeid) {
+	// TODO Auto-generated method stub
+	tokenVO = memberDAO.selectUserIdByToken(accesstoken);
+	int result = memberDAO.deleteFollowInfo(tokenVO.getUserId(), followeeid);
+	return result;
+}
+
 
 	
 	

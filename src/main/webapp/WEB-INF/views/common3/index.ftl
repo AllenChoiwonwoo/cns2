@@ -32,11 +32,12 @@ body {
 	<#include "header.ftl">
 
 	<div class="container">
+	
 		<#if user??>
 			<div class="my-5"></div>
 			<ul class="nav nav-tabs">
 				 <li class="nav-item">
-				 	<a class="nav-link active" data-toggle="tab" href="#myfeed">My Posts</a>
+				 	<a class="nav-link active" data-toggle="tab" href="#myfeed">My Feed</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" data-toggle="tab" href="#posts">All Posts</a>
@@ -54,7 +55,7 @@ body {
 						<h1 class="my-4"></h1>
 					</div>
 				</div>
-		 <#else> 
+		<#else>
 			<div class="row">
 				<div class="col-md-2"></div>
 				<div class="col-md-8" id="posts">
@@ -111,7 +112,7 @@ body {
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
 		integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
 		crossorigin="anonymous"></script>
-	<script src="/js/indexksk.js"></script>
+	<script src="/js/index.js"></script>
 </body>
 
 </html>

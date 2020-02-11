@@ -1,11 +1,12 @@
 package com.myspring.cns.member.controller;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -64,7 +65,7 @@ public class MemberController {
 			@RequestHeader(value="accesstoken", required = false) String accesstoken,
 //			@CookieValue(value="accesstoken", required = false) String accesstoken,
 			@RequestParam("id") String id,
-//			@Requset
+//			@Request
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		logger.info(" user - get. selectUserInfo 메서도 호출 됨 ");
@@ -107,6 +108,65 @@ public class MemberController {
 
 			return restReturnTokenVO;
 	}
+	
+	@RequestMapping(value = "/follow", method = RequestMethod.POST)
+	public RestReturnMemberVO dofollow(
+			@RequestHeader(value="accesstoken")
+			String accesstoken,
+			@RequestBody Map<String,Integer> requestMap)
+//			@RequestBody("followeeId") int followeeId) 
+	{		
+			int followee_id = requestMap.get("followeeId");
+			logger.info(" doFollow - 호출됨, followee_id = "+followee_id);
+			
+			// 여기에 이제 feed, follow 테이블에 데이터를 저장할 수 있는 메서드를 만들어야한다.
+		/*
+		 * follow 버튼을 누르면 이 메서드가 실행된다.
+		 * 1. 서비서의 addfollow(토큰) 실행
+		 * 2. 서비스에서 토큰을 통해 userid를 알아냄(tokenvo, folloeeeid)
+		 * 3. follow 테이블에 userid, followeeid 추가
+		 * 4. 잘 추가되면 클라로 success 를 return 한다.
+		 *  */
+			int result = memberService.doFollow(accesstoken, followee_id);
+		
+		return setRestReturnMemberVO(result);
+	}
+	
+	@RequestMapping(value = "/follow", method = RequestMethod.DELETE)
+	public RestReturnMemberVO undofollow(
+			@RequestHeader(value="accesstoken")
+			String accesstoken,
+			@RequestBody Map<String,Integer> requestMap) {
+			
+			// 여기에 이제 feed, follow 테이블에 데이터를 저장할 수 있는 메서드를 만들어야한다.
+		/* ㅣ
+		 * unfollow 버튼을 누러면 이 메서드가 실행된다.
+		 * 1. 서비서의 undofollow 를 실행
+		 * 2. follow 테이블에서 followee_id, followr_id 를 조건으로 넣어 해당 row 삭제 
+		 * 3. 잘 되면 succes return
+		 * 4. */
+			int followee_id = requestMap.get("followeeId");
+			logger.info(" undoFollow - 호출됨, followee_id = "+followee_id);
+			int result = memberService.undoFollow(accesstoken,followee_id);
+		
+		return setRestReturnMemberVO(result);
+	}
+	
+	private RestReturnMemberVO setRestReturnMemberVO(int result) {
+		if(result != 1) {
+			restReturnMemberVO.setMessage("Error");
+			restReturnMemberVO.setCode(500);
+			restReturnMemberVO.setData("follow sql is fail!");
+			return restReturnMemberVO;
+		}
+		restReturnMemberVO.setData("Success");
+	
+		return restReturnMemberVO;
+	}
+	
+	
+
+	
 	
 	
 	

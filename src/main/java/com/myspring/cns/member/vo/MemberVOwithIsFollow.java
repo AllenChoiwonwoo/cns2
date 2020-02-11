@@ -6,8 +6,8 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-@Component("MemberVO")
-public class MemberVO {
+@Component("MemberVOwithIsFollow")
+public class MemberVOwithIsFollow {
 	
 	private int id=0;
 	private String username=null;
@@ -17,13 +17,13 @@ public class MemberVO {
 //	private String ;
 	private Date created_at=null;
 //	@JsonInclude(JsonInclude.Include.)
-//	private boolean isFollow;
+	private boolean isFollow;
 	
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
 //		return super.toString();
-		String info = id+", "+username+", "+password+", "+created_at;
+		String info = id+", "+username+", "+password+", "+created_at+", "+isFollow;
 		return info;
 	}
 	
@@ -50,6 +50,14 @@ public class MemberVO {
 	}
 	public void setCreated_at(Date date) {
 		this.created_at = date;
+	}
+
+	public boolean isFollow() {
+		return isFollow;
+	}
+
+	public void setFollow(boolean isFollow) {
+		this.isFollow = isFollow;
 	}
 	
 	

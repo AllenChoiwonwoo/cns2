@@ -2,7 +2,6 @@ package com.myspring.cns;
 
 import java.text.DateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.Cookie;
@@ -76,7 +75,7 @@ public class HomeController {
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 //		System.out.println("signup method 실생됨");
 		logger.info("signup method 실생됨");
-		ModelAndView mav = new ModelAndView();
+//		ModelAndView mav = new ModelAndView();
 		return "signup";
 	}
 	

@@ -31,6 +31,16 @@ public class BoardService {
 	
 	public BoardVO addNewPost(String accessToken, BoardVO bvo) {
 		TokenVO tokenvo = memberDAO.selectUserIdByToken(accessToken);
+		/*step3  으로 인한 코드 추가
+		 * 내가 글을 쓰면 내 follower들의 feed에 테이가 추가되어야한다.
+		 * 1. post 테이블에 테이터를 추가한 후
+		 * 2. 방금 추가한 post 의 id 를 받아와서
+		 * 3. 토큰을 받아온 내 id로 내 follower들의 id들을 받아온다.
+		 * 4. 반복문을 통해 feed 테이블에 {myid, followerid, post_id }를 저장한다.
+		 * 여기서 반복문을 통해 모든 followerid[] 의 모든 값은 다 사용해 넣을 수 있게 한다.
+		 * 또 나자신은 내가 기본으로 follow 하고 있도록 한다.
+		 * 
+		 *  */
 		logger.info("!!!!  "+tokenvo.toString());
 		bvo.setUserId(tokenvo.getUserId());
 		logger.info("bvo = "+bvo.toString());

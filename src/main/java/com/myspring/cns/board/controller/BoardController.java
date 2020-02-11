@@ -11,8 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.myspring.cns.board.service.BoardService;
 import com.myspring.cns.board.vo.BoardVO;
@@ -83,19 +85,7 @@ public class BoardController {
 		return restReturnMemberVO;
 	}
 	
-	@RequestMapping(value = "/post/my", method=RequestMethod.GET)
-	public RestReturnMemberVO getMyAllPost(
-			@CookieValue(value="accesstoken", required = false) String accesstoken,
-			HttpServletRequest request, HttpServletResponse response) {
-			
-//			String accessToken = request.getHeader("accesstoken");
-			logger.info("accessToken = "+accesstoken);
-		
-			List<BoardVO> myPostList = boardService.getMyAllPost(accesstoken);
-			restReturnMemberVO.setData(myPostList);
-		
-		return restReturnMemberVO;
-	}
+	
 
 	@RequestMapping(value = "/post/{id}", method=RequestMethod.GET)
 	public RestReturnMemberVO getOnePostById(
@@ -113,6 +103,7 @@ public class BoardController {
 			HttpServletRequest request, HttpServletResponse response) {
 			
 		int result = boardService.deleteOnePostById(id);
+		
 		restReturnMemberVO.setData(result);
 		return restReturnMemberVO;
 	}
@@ -127,7 +118,55 @@ public class BoardController {
 		return restReturnMemberVO;
 	}
 	// put , /post/detail/{id} 부터 하면 된다.
-			
 	
+	@RequestMapping(value = "/post/my", method=RequestMethod.GET)
+	public RestReturnMemberVO getMyAllPost(
+			@CookieValue(value="accesstoken", required = false) String accesstoken,
+			HttpServletRequest request, HttpServletResponse response) {
+			
+//			String accessToken = request.getHeader("accesstoken");
+			logger.info("accessToken = "+accesstoken);
+		
+			List<BoardVO> myPostList = boardService.getMyAllPost(accesstoken);
+			restReturnMemberVO.setData(myPostList);
+		
+		return restReturnMemberVO;
+	}
+	
+	// Feed(내가 쓴글 + 내가 follow 하는 사용자 글 ) 조회
+	@RequestMapping(value = "/post/feed", method = RequestMethod.GET)
+	public RestReturnMemberVO dofollow(
+			@RequestHeader(value="accesstoken", required = false) String accesstoken
+//			,@RequestParam("followeeId") int followeeId
+			) 
+	{
+		/*- 내가 글을 쓰면 나를 팔로우 하고 있는 사람들의 feed 정보를 feed 테이블에 넣어주면 됨
+		 - 나의 글은 default로 feed에 입력 됨 --> 내 자신을 팔로우 하고 있다고 가정
+		 - 팔로우 하는 시점 부터 feed에 정보 입력
+		 - 팔로우를 끊어도 기존 feed 정보는 삭제 하지 않음
+		 - 기존 My Post 탭이 My Feed로 변경 되었고 이 탭에는 나의 글과 내가 팔로우 하는 사람들이 쓴 글 목록 조회 됨
+		 - followee가 follow를 당하는 사람
+		 - follower가 follow를 하는 사람
+		 
+		 1. 토큰은 통해 로그인한 userid를 받아온다.
+		 2. userid를 통해 follow테이블에서 userid가 누굴 팔로우 하고 있는야 followee_id[] 를 받아온다.
+		 3. followee_id[] 에 있는 모든 값을 조건으로 해서 feed테이블에서 postid를 조회한다.
+		 4. 해당 postid[] 에 담긴 모든 값을 통해 post테이블에서 조회해서 데이터를 넣는다.
+		 순서는 feed.createdAt 을 최신순(desc)으로 한다.
+		 -여기서 isFollow를 boolen값으로 넣어줘야하는데
+	     -이건 내가 팔로우 중인 사람들의 글만 불러오는 부분이니
+	     -쿼리내의 연산으로 "isFollow : true" 값이 나올 수 있게 해야겠다.
+	     -그리고 결론적으로는 mybatis 에서 resultMap을 새로 설정해 postVO가 user를 품을 수 있게 해야겠다.
+		 */
+		
+		
+
+			
+			// 여기에 이제 feed, follow 테이블에 데이터를 저장할 수 있는 메서드를 만들어야한다.
+		
+			restReturnMemberVO.setData("Success");
+		
+		return restReturnMemberVO;
+	}
 
 }

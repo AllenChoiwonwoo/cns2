@@ -41,6 +41,7 @@ public class BoardDAO {
 		
 		return boardVO;
 	}
+	
 	public List<BoardVO> selectAllPost() {
 		List<BoardVO> resultList = sqlSession.selectList(mybatisRocation+"selectAllPost");
 		return resultList;

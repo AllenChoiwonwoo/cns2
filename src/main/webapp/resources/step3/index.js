@@ -1,5 +1,5 @@
 $(document).ready(function(){
-//	alert("1.번 2번줄, ready(fn) 발동")
+	
 	var token;
 	if(document.cookie.includes("accesstoken")) {
 		token = document.cookie.split('token=')[1];	
@@ -7,7 +7,7 @@ $(document).ready(function(){
 	
 	$.ajax({
 		beforeSend: function(xhr){
-			xhr.setRequestHeader('accesstoken', token);// 서버랑 소통은 하지 않고, header에 장착한다.
+			xhr.setRequestHeader('accesstoken', token);
         },
         url: "/post"
     }).then(function(data) {
@@ -15,18 +15,17 @@ $(document).ready(function(){
     		$('#posts').append(
     				'<div class="card mb-4"> <div class="card-body"> <h2 class="card-title">' + e.title 
     				+ '</h2> <p class="card-text">' + e.content 
-    				+ '</p> <a href="/page/detail/' + e.id 
+    				+ '</p> <a href="/post/detail/' + e.id 
     				+ '" class="btn btn-primary">Read More &rarr;</a> </div> ' 
     				+ '<div class="card-footer text-muted"> Posted on ' + e.createdAt.split('T')[0]
-    				+ ' by ' + e.user.username
+    				+ ' by ' + e.user.username + getFollowInfo(e.user)
     				+ '</div> </div>');
     	});
        console.log(data);
     }, function(err) {
     	console.log(err.responseJSON);
     });
-/***  이 부분은 step3에 추가된 코드이다.
- * follow 버튼을 추가해주는 코드이다.  */
+	
 	function getFollowInfo(user) {
 		if(user.isFollow) {
 			return ' <span class="unfollow" value="' + user.id + '" style="color:blue; cursor: pointer;"> Unfollow </span>';	
@@ -38,21 +37,22 @@ $(document).ready(function(){
 		
 	}
 	
+	
 	if(token) {
 		$.ajax({
 			beforeSend: function(xhr){
 				xhr.setRequestHeader('accesstoken', token);
 	        },
-	        url: "/post/my"
+	        url: "/post/feed"
 	    }).then(function(data) {
 	    	$.each(data.data, function(index, e) {
 	    		$('#myfeed').append(
 	    				'<div class="card mb-4"> <div class="card-body"> <h2 class="card-title">' + e.title 
 	    				+ '</h2> <p class="card-text">' + e.content 
-	    				+ '</p> <a href="/page/detail/' + e.id 
+	    				+ '</p> <a href="/post/detail/' + e.id 
 	    				+ '" class="btn btn-primary">Read More &rarr;</a> </div> ' 
 	    				+ '<div class="card-footer text-muted"> Posted on ' + e.createdAt.split('T')[0]
-	    				+ ' by ' + e.user.username
+	    				+ ' by ' + e.user.username + getFollowInfo(e.user)
 	    				+ '</div> </div>');
 	    	});
 	       console.log(data);

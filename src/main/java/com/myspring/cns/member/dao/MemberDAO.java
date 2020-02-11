@@ -1,5 +1,8 @@
 package com.myspring.cns.member.dao;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,6 +68,27 @@ public class MemberDAO {
 
 		myTokenVO = sqlSession.selectOne("mapper.member.selectUserIdByToken", accessToken);
 		return myTokenVO;
+	}
+
+	public int insertFollowInfo(int userId, int followeeId) {
+		// TODO Auto-generated method stub
+		Map<String,Integer> map = new HashMap<String,Integer>();
+		map.put("follower", userId);
+		map.put("followee",followeeId);
+		logger.info("insertFollowInfo - map = "+map.toString());
+		int result = sqlSession.insert("mapper.member.insertFollowInfo", map);
+		return result;
+	}
+
+	public int deleteFollowInfo(int userId, int followeeId) {
+		// TODO Auto-generated method stub
+		Map<String,Integer> map = new HashMap<String,Integer>();
+		map.put("follower", userId);
+		map.put("followee",followeeId);
+		logger.info("deleteFollowInfo - map = "+map.toString());
+		int result = sqlSession.delete("mapper.member.deleteFollowInfo", map);
+		logger.info("deleteFollowInfo - result = "+result);
+		return result;
 	}
 
 	
