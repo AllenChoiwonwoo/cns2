@@ -6,8 +6,12 @@
 	<typeAliases>
 		<typeAlias type="com.myspring.cns.member.vo.MemberVO"  alias="memberVO" />
 		<typeAlias type="com.myspring.cns.member.vo.TokenVO"  alias="tokenVO" />
+		<typeAlias type="com.myspring.cns.member.vo.RestReturnMemberVO" alias="RestReturnMemberVO"/>
+		<typeAlias type="com.myspring.cns.member.vo.MemberVOwithIsFollow" alias="memberVOwithIsFollow"/>
 		<!-- <typeAlias type="com.myspring.pro30.board.vo.TokenVO"  alias="imageVO" /> -->
 		<typeAlias type="com.myspring.cns.board.vo.BoardVO"  alias="boardVO" />
-		
+		<typeAlias type="com.myspring.cns.board.vo.FollowVO" alias="followVO"/>
+		<typeAlias type="com.myspring.cns.board.vo.FeedVO" alias="feedVO"/>
+		<typeAlias type="com.myspring.cns.board.vo.IsfollowBoardVO" alias="isfollowBoardVO"/>
 	</typeAliases>
 </configuration>

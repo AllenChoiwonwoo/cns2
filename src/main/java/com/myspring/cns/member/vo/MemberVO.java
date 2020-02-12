@@ -15,7 +15,7 @@ public class MemberVO {
 	private String password=null;
 //	private String created_at;
 //	private String ;
-	private Date created_at=null;
+	private Date createdAt=null;
 //	@JsonInclude(JsonInclude.Include.)
 //	private boolean isFollow;
 	
@@ -23,7 +23,7 @@ public class MemberVO {
 	public String toString() {
 		// TODO Auto-generated method stub
 //		return super.toString();
-		String info = id+", "+username+", "+password+", "+created_at;
+		String info = id+", "+username+", "+password+", "+createdAt;
 		return info;
 	}
 	
@@ -46,10 +46,10 @@ public class MemberVO {
 		this.password = password;
 	}
 	public Date getCreated_at() {
-		return created_at;
+		return createdAt;
 	}
 	public void setCreated_at(Date date) {
-		this.created_at = date;
+		this.createdAt = date;
 	}
 	
 	

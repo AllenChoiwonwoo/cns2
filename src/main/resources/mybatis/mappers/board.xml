@@ -12,6 +12,11 @@
 		<result property="password" column="password" />
 		<result property="created_at" column="created_at" />
 	</resultMap> -->
+	<resultMap id="feedResult" type="feedVO">
+		<result property="user_id" column="follower_id"/>
+		<result property="followee_id" column="followee_id"/>
+		<!-- <result property="post_id" column="follower_id"/> -->
+	</resultMap>
 	<resultMap id="boradResult" type="boardVO">
 		<result property="id" column="id" />
 		<result property="userId" column="user_id" />
@@ -20,6 +25,8 @@
 		<result property="createdAt" column="created_at" />
 		<!-- <association property="user" resultMap="userResult2"></association> -->
 	</resultMap>
+	
+	
 	<!-- <resultMap id="tokenResult" type="tokenVO"> <result property="token" 
 		column="token" /> <result property="userId" column="user_id" /> <result property="created_at" 
 		column="created_at" /> </resultMap> -->
@@ -84,6 +91,55 @@
 	     id=#{id}
       ]]>
 	</update>
+	<select id="getFollowerIdListById" parameterType="_int" resultMap="feedResult">
+      <![CDATA[
+         select follower_id from follow where followee_id = #{userId}
+      ]]>
+	</select>
+	<insert id="insertFeedData" parameterType="list">
+		<!-- useGeneratedKeys="true" keyProperty="id"> -->
+		<![CDATA[
+		 insert into feed (user_id, followee_id, post_id)
+		 values
+		]]>
+		<foreach collection="list" item="item" separator=" , ">
+			(#{item.user_id}, #{item.followee_id}, #{item.post_id})
+		</foreach>
+		<!-- <selectKey resultType="int" keyProperty="id" order="AFTER"> SELECT 
+			LAST_INSERT_ID() </selectKey> -->
+	</insert>
+	<resultMap id="memberVOwithIsFollowResult" type="memberVOwithIsFollow">
+		<result property="id" column="u.id" />
+        <result property="username" column="u.username" />
+        <result property="password" column="password" />
+        <result property="created_at" column="u.created_at" />
+        <result property="isFollow" column="isFollow"/>
+	</resultMap>
+	<resultMap type="isfollowBoardVO" id="boardVOwithUser">
+		<result property="id" column="p.id" />
+		<result property="userId" column="p.user_id" />
+		<result property="title" column="p.title" />
+		<result property="content" column="p.content" />
+		<result property="createdAt" column="p.created_at" />
+		<association property="user" resultMap="memberVOwithIsFollowResult">
+			<!-- association 관련 블로그 : https://araikuma.tistory.com/476 -->
+		</association>
+	</resultMap>
+	<select id="selectFolloweesPosts" parameterType="_int" resultMap="boardVOwithUser">
+      <![CDATA[
+         select 
+         p.id as "p.id" , p.user_id as "p.user_id", p.title as "p.title", p.content as "p.content", p.created_at as "p.created_at",
+		 u.id as "u.id" , u.username as "u.username", u.created_at as "u.created_at" 
+			from post as p
+    			inner join user as u
+		    		on p.user_id = u.id
+				inner join feed as f
+		    		on p.id = f.post_id
+		 	where f.user_id = #{userId}
+		 	order by f.created_at
+      ]]>
+	</select>
+	
 
 	<!-- <insert id="insertToken" parameterType="tokenVO"> <![CDATA[ insert 
 		into token (token, user_id) values( #{token}, #{userId}) ]]> </insert> -->

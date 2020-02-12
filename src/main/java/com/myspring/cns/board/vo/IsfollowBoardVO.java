@@ -8,8 +8,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.myspring.cns.member.vo.MemberVO;
 import com.myspring.cns.member.vo.MemberVOwithIsFollow;
 
-@Component("BoardVO")
-public class BoardVO {
+@Component("IsfollowBoardVO")
+public class IsfollowBoardVO {
 	
 	private int id;
 	private int userId;
@@ -17,10 +17,8 @@ public class BoardVO {
 	private String content;
 	private Date createdAt;
 	@JsonInclude(JsonInclude.Include.NON_NULL)
-	private MemberVO user;
-	@JsonInclude(JsonInclude.Include.NON_NULL)
-	private MemberVOwithIsFollow userWithIsFollow;
-	
+	private MemberVOwithIsFollow user;
+
 
 	@Override
 	public String toString() {
@@ -32,19 +30,19 @@ public class BoardVO {
 	}
 	
 	
-	public BoardVO() {
+	public IsfollowBoardVO() {
 		super();
 	}
 	
-	public BoardVO(int id, int userId, String title, String content, Date createdAt) {
-		super();
-		this.id = id;
-		this.userId = userId;
-		this.title = title;
-		this.content = content;
-		this.createdAt = createdAt;
-	}
-	public BoardVO(int id, int userId, String title, String content, Date createdAt, MemberVO user) {
+//	public IsfollowBoardVO(int id, int userId, String title, String content, Date createdAt) {
+//		super();
+//		this.id = id;
+//		this.userId = userId;
+//		this.title = title;
+//		this.content = content;
+//		this.createdAt = createdAt;
+//	}
+	public IsfollowBoardVO(int id, int userId, String title, String content, Date createdAt, MemberVOwithIsFollow user) {
 		super();
 		this.id = id;
 		this.userId = userId;
@@ -52,17 +50,6 @@ public class BoardVO {
 		this.content = content;
 		this.createdAt = createdAt;
 		this.user = user;
-	}
-	
-	public BoardVO(int id, int userId, String title, String content, Date createdAt,
-			MemberVOwithIsFollow userWithIsFollow) {
-		super();
-		this.id = id;
-		this.userId = userId;
-		this.title = title;
-		this.content = content;
-		this.createdAt = createdAt;
-		this.userWithIsFollow = userWithIsFollow;
 	}
 
 
@@ -98,24 +85,16 @@ public class BoardVO {
 	}
 
 
-	public MemberVO getUser() {
+	public MemberVOwithIsFollow getUser() {
 		return user;
 	}
 
 
-	public void setUser(MemberVO user) {
+	public void setUser(MemberVOwithIsFollow user) {
 		this.user = user;
 	}
 
 
-	public MemberVOwithIsFollow getUserWithIsFollow() {
-		return userWithIsFollow;
-	}
-
-
-	public void setUserWithIsFollow(MemberVOwithIsFollow userWithIsFollow) {
-		this.userWithIsFollow = userWithIsFollow;
-	}
 
 	
 	

@@ -23,22 +23,33 @@ public class MemberService {
 	@Autowired
 	private MemberVO memberVO;
 	
-	
-	public TokenVO authorizeMember(MemberVO membervo) {
+	/*
+	 * 인증(Authentication), 권한부여(Authorization), 접근제어(Access Control) 인증(authentication)
+	 * 은 자신이 누구라고 주장하는 사람을 확인하는 절차이다.
+	 */
+	public TokenVO authenticationMember(MemberVO membervo) {
 		MemberVO resultVO = memberDAO.selectOneUserInfoByUsernamePassword(membervo);
 		tokenVO = memberDAO.getUserToken(resultVO.getId());
 		logger.info(""+resultVO.getId()+"");
 
 //		System.out.println(tokenVO.toString());
-		if(tokenVO == null) {
+		if(tokenVO.getToken() == null) {
 			tokenVO = new TokenVO();
 			logger.info("아직 auth 안한 회원");
 //			System.out.println("아직 auth 안한 회원");
 
 			String token = resultVO.getUsername()+randomSM();
+			logger.info("author , token = "+token);
 			tokenVO.setToken(token);
 			tokenVO.setUserId(resultVO.getId());
+			logger.info("authorizeMembver, tokenVO = "+tokenVO.toString());
+			// ㅎget user token?  ? 아직 없는데?
+			memberDAO.insertToken(tokenVO);
 			tokenVO = memberDAO.getUserToken(tokenVO.getUserId());
+			logger.info("-authorizeMembver , tokenVO = "+tokenVO.toString());
+			
+			int result = memberDAO.insertFollowInfo(tokenVO.getUserId(), tokenVO.getUserId());
+			logger.info(" 내가 나 자신을 팔로우 한다." );
 			
 		}else {
 			logger.info("auth 한 회원");

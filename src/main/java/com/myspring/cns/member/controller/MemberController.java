@@ -93,11 +93,11 @@ public class MemberController {
 			// 여기까지는 들어온다. 이걸 db에 넣고 빼고 하면 된다.
 			membervo.setUsername(tokenvo2.getUsername());
 			membervo.setPassword(tokenvo2.getPassword());
-			System.out.println(tokenvo2.getUsername());
+//			System.out.println(tokenvo2.getUsername());
 			logger.info(tokenvo2.getUsername());
 //			String token = tokenvo2.getUsername()+randomSM();
 			
-			tokenVO = memberService.authorizeMember(membervo);
+			tokenVO = memberService.authenticationMember(membervo);
 		
 			logger.info( tokenVO.toString());
 			logger.info( membervo.toString());

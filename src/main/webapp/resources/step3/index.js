@@ -27,11 +27,11 @@ $(document).ready(function(){
     });
 	
 	function getFollowInfo(user) {
-		if(user.isFollow) {
+		if(user.isFollow) {// true : 팔로우 하고 있을때
 			return ' <span class="unfollow" value="' + user.id + '" style="color:blue; cursor: pointer;"> Unfollow </span>';	
 		} else if(user.isFollow == null){
 			return '';
-		} else {
+		} else { // false : 팔로우 안하고 있을때
 			return ' <span class="follow" value="' + user.id + '" style="color:blue; cursor: pointer;"> Follow </span>';
 		}
 		

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.myspring.cns.board.vo.BoardVO;
+import com.myspring.cns.board.vo.FeedVO;
 import com.myspring.cns.member.vo.TokenVO;
 
 @Repository("BoardDAO")
@@ -61,6 +62,32 @@ public class BoardDAO {
 	public int updateOnePostById(BoardVO boardVO2) {
 		return sqlSession.update(mybatisRocation+"updateOnePostById", boardVO2);
 	}
-	
+
+	public List getFollowerIdListById(int userId) {
+		logger.info("getFollowerIdListById. userid = "+userId);
+		List follewerIdList = sqlSession.selectList(mybatisRocation+"getFollowerIdListById", userId);
+		logger.info("getFollowerIdListById, list = "+follewerIdList.toString());
+		return follewerIdList;
+	}
+
+	public int insertFeedData(List<FeedVO> followersId, int userId, int boardId) {
+		// TODO Auto-generated method stub
+		for (FeedVO feedVO : followersId) {
+//			feedVO.setUser_id(userId);
+			feedVO.setPost_id(boardId);
+			feedVO.setFollowee_id(userId);
+//			followee id 는 이미 있음
+			logger.info("insertFeedData , feedvo = "+feedVO.toString());
+		}
+		int result = sqlSession.insert(mybatisRocation+"insertFeedData", followersId);
+		logger.info("insertFeedData , result = "+result);
+		return 0;
+	}
+
+	public List selectFolloweesPosts(int userId) {
+		// TODO Auto-generated method stub
+		List result = sqlSession.selectList(mybatisRocation+"selectFolloweesPosts", userId);
+		return result;
+	}
 	
 }

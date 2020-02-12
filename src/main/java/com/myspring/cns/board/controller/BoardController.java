@@ -135,7 +135,7 @@ public class BoardController {
 	
 	// Feed(내가 쓴글 + 내가 follow 하는 사용자 글 ) 조회
 	@RequestMapping(value = "/post/feed", method = RequestMethod.GET)
-	public RestReturnMemberVO dofollow(
+	public RestReturnMemberVO getMyFeeds(
 			@RequestHeader(value="accesstoken", required = false) String accesstoken
 //			,@RequestParam("followeeId") int followeeId
 			) 
@@ -158,13 +158,15 @@ public class BoardController {
 	     -쿼리내의 연산으로 "isFollow : true" 값이 나올 수 있게 해야겠다.
 	     -그리고 결론적으로는 mybatis 에서 resultMap을 새로 설정해 postVO가 user를 품을 수 있게 해야겠다.
 		 */
+			List myFeedBVOs = boardService.getMyFeeds(accesstoken);//내가 팔로우 하는사람 글 가져오기
 		
 		
 
 			
 			// 여기에 이제 feed, follow 테이블에 데이터를 저장할 수 있는 메서드를 만들어야한다.
-		
-			restReturnMemberVO.setData("Success");
+			restReturnMemberVO.setCode(200);
+			restReturnMemberVO.setMessage("Success");
+			restReturnMemberVO.setData(myFeedBVOs);
 		
 		return restReturnMemberVO;
 	}

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.myspring.cns.board.dao.BoardDAO;
 import com.myspring.cns.board.vo.BoardVO;
+import com.myspring.cns.board.vo.FeedVO;
 import com.myspring.cns.member.dao.MemberDAO;
 import com.myspring.cns.member.vo.MemberVO;
 import com.myspring.cns.member.vo.TokenVO;
@@ -47,6 +48,12 @@ public class BoardService {
 		int boardId = boardDAO.insertPost(bvo);
 		logger.info("생성된 포스트 id 값 = "+boardId);
 		boardVO = boardDAO.selectOnePostById(boardId);
+		//---여기서 부터 step3 - 글작성시 feed테이블에 데이터 추가 코드 
+		List<FeedVO> followeersIds = boardDAO.getFollowerIdListById(tokenvo.getUserId());// 나의 follower 리스트
+		
+		logger.info("addNewPost . followersId = "+followeersIds.toString());
+		int result = boardDAO.insertFeedData(followeersIds, tokenvo.getUserId(), boardId);
+		
 		logger.info("boardVO = "+boardVO.toString());
 		return boardVO;
 	}
@@ -107,6 +114,17 @@ public class BoardService {
 	public int editOnePostById(BoardVO boardVO2) {
 		// TODO Auto-generated method stub
 		return boardDAO.updateOnePostById(boardVO2);
+	}
+
+
+	public List<BoardVO> getMyFeeds(String accesstoken) {
+		// TODO Auto-generated method stub
+		tokenVO = memberDAO.selectUserIdByToken(accesstoken);
+		logger.info("getMyFeeds , userId = "+tokenVO.getUserId());
+		List resultList = boardDAO.selectFolloweesPosts(tokenVO.getUserId());//내가 팔로우 하는사람 글 가져오기
+		
+//		List<BoardVO> bvoList = boardDAO.
+		return resultList;
 	}
 
 

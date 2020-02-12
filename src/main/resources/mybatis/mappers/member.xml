@@ -24,6 +24,7 @@
       <result property="email" column="email" />
       <result property="joinDate" column="joinDate" />
    </resultMap> -->
+   
 
 
 <!-- 	<select id="selectAllMemberList" resultMap="memResult">

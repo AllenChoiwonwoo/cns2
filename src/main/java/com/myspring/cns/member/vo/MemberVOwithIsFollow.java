@@ -15,7 +15,7 @@ public class MemberVOwithIsFollow {
 	private String password=null;
 //	private String created_at;
 //	private String ;
-	private Date created_at=null;
+	private Date createdAt=null;
 //	@JsonInclude(JsonInclude.Include.)
 	private boolean isFollow;
 	
@@ -23,7 +23,7 @@ public class MemberVOwithIsFollow {
 	public String toString() {
 		// TODO Auto-generated method stub
 //		return super.toString();
-		String info = id+", "+username+", "+password+", "+created_at+", "+isFollow;
+		String info = id+", "+username+", "+password+", "+createdAt+", "+isFollow;
 		return info;
 	}
 	
@@ -45,18 +45,18 @@ public class MemberVOwithIsFollow {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public Date getCreated_at() {
-		return created_at;
+	public Date getCreatedAt() {
+		return createdAt;
 	}
-	public void setCreated_at(Date date) {
-		this.created_at = date;
+	public void setCreatedAt(Date date) {
+		this.createdAt = date;
 	}
 
 	public boolean isFollow() {
 		return isFollow;
 	}
 
-	public void setFollow(boolean isFollow) {
+	public void setIsFollow(boolean isFollow) {
 		this.isFollow = isFollow;
 	}
 	
