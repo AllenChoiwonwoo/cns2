@@ -45,10 +45,10 @@ public class MemberVO {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public Date getCreated_at() {
+	public Date getCreatedAt() {
 		return createdAt;
 	}
-	public void setCreated_at(Date date) {
+	public void setCreatedAt(Date date) {
 		this.createdAt = date;
 	}
 	

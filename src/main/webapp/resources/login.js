@@ -1,4 +1,3 @@
-// step2
 $(document).ready(function(){
 	$('#login_btn').click(function(){
 		console.log("login clicked!!!");

@@ -1,7 +1,6 @@
 $(document).ready(function(){
 	var postId = $('#detail_post_id').attr("value");
 	postId = postId.replace(/,/g, "");
-	
 	console.log("postId - " + postId);
 	
 	$.ajax({
@@ -16,23 +15,10 @@ $(document).ready(function(){
     	console.log(err.responseJSON);
     });
 	
-//	$.ajax({
-//        url: "/comments?post_id="+postId
-//    }).then(function(data) {
-//    	$.each(data, function(index, e) {
-//    		$('#comments').append(
-//    				'<div class="media mb-4"><div class="media-body"><h5 class="mt-0">' + e.user
-//    				+ '</h5>' + e.comment 
-//    	            + '</div></div>');
-//    	});
-//       console.log(data);
-//    }, function(err) {
-//    	console.log(err.responseJSON);
-//    });
-	
 	
 	$('#detail_delete_btn').click(function(){
 		var postId = $('#detail_post_id').attr("value");
+		postId = postId.replace(/,/g, "");
 		console.log("delete button click! - " + postId);
 		$.ajax({
 	        url: "/post/"+postId,
@@ -66,7 +52,6 @@ $(document).ready(function(){
             contentType: 'application/json',
             data: JSON.stringify(param)
 	    }).then(function(data) {
-	    	alert("window.location.href = '/page/detail/'"+postId);
 	    	window.location.href = '/page/detail/'+postId;
 	    }, function(err) {
 	    	alert(err.responseJSON);
