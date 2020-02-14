@@ -55,7 +55,7 @@ public class MemberDAO {
 			tokenVO.setUserId(id);
 		} catch (Exception e) {
 
-			e.printStackTrace();
+//			e.printStackTrace();
 //			System.out.println("에러가 발생했습니다. !!!!!!!!!");
 			logger.info("에러 발생, 에러를 발생시켰습니다");
 			logger.info("db.token 테이블에 해당 id의 값이 없습니다.");

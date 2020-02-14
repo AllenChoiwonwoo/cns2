@@ -52,7 +52,7 @@ public class MemberVOwithIsFollow {
 		this.createdAt = date;
 	}
 
-	public boolean isFollow() {
+	public boolean getIsFollow() {
 		return isFollow;
 	}
 

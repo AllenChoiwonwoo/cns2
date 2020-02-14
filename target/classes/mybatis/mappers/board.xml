@@ -112,7 +112,7 @@
 		<result property="id" column="u.id" />
         <result property="username" column="u.username" />
         <result property="password" column="password" />
-        <result property="created_at" column="u.created_at" />
+        <result property="createdAt" column="u.created_at" />
         <result property="isFollow" column="isFollow"/>
 	</resultMap>
 	<resultMap type="isfollowBoardVO" id="boardVOwithUser">
@@ -139,6 +139,7 @@
 		 	order by f.created_at
       ]]>
 	</select>
+	
 	
 
 	<!-- <insert id="insertToken" parameterType="tokenVO"> <![CDATA[ insert 
