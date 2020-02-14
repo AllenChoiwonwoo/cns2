@@ -35,7 +35,9 @@ public class MemberDAO {
 	}
 
 	public MemberVO selectOneUserInfoByUsernamePassword(MemberVO membervo) {
+		logger.info("selectOneUserInfoByUsernamePassword, memberVO = "+membervo.toString());
 		MemberVO resultVO = sqlSession.selectOne("mapper.member.selectOneUserInfoByUsernamePassword", membervo);
+		logger.info("selectOneUserInfoByUsernamePassword, return memberVO = "+resultVO.toString());
 		return resultVO;
 	}
 

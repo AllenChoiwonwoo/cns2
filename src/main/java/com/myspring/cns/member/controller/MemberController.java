@@ -48,13 +48,20 @@ public class MemberController {
 		membervo.setPassword(tokenvo2.getPassword());
 
 		logger.info("username , password : "+tokenvo2.getUsername()+", "+tokenvo2.getPassword());
-
-		MemberVO memberVO = memberService.addMember(membervo);
-		memberVO.setPassword(null);
-
+		try {
+			membervo = memberService.addMember(membervo);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			membervo.setPassword(null);
+			restReturnMemberVO.setCode(500);
+			restReturnMemberVO.setMessage("error");
+			restReturnMemberVO.setData("");
+		}
+		membervo.setPassword(null);
 		restReturnMemberVO.setCode(200);
 		restReturnMemberVO.setMessage("Success");
-		restReturnMemberVO.setData(memberVO);
+		restReturnMemberVO.setData(membervo);
 		return restReturnMemberVO;
 		
 	}
