@@ -49,7 +49,7 @@ public class MemberService {
 			logger.info("-authorizeMembver , tokenVO = "+tokenVO.toString());
 			
 			int result = memberDAO.insertFollowInfo(tokenVO.getUserId(), tokenVO.getUserId());
-			logger.info(" 내가 나 자신을 팔로우 한다." );
+			logger.info(" 내가 나 자신을 팔로우 한다." + result );
 			
 		}else {
 			logger.info("auth 한 회원");

@@ -8,7 +8,7 @@
 		<result property="id" column="id" />
         <result property="username" column="username" />
         <result property="password" column="password" />
-        <result property="created_at" column="created_at" />
+        <result property="createdAt" column="created_at" />
 	</resultMap> 
 	
 	<resultMap id="tokenResult" type="tokenVO">

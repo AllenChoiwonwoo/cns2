@@ -19,16 +19,15 @@ public class MemberVO {
 //	@JsonInclude(JsonInclude.Include.)
 //	private boolean isFollow;
 	
-	@Override
-	public String toString() {
-		// TODO Auto-generated method stub
-//		return super.toString();
-		String info = id+", "+username+", "+password+", "+createdAt;
-		return info;
-	}
+	
 	
 	public int getId() {
 		return id;
+	}
+	@Override
+	public String toString() {
+		return "MemberVO [id=" + id + ", username=" + username + ", password=" + password + ", createdAt=" + createdAt
+				+ "]";
 	}
 	public void setId(int id) {
 		this.id = id;

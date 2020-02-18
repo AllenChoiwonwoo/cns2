@@ -5,7 +5,6 @@ import java.sql.Date;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.myspring.cns.member.vo.MemberVO;
 import com.myspring.cns.member.vo.MemberVOwithIsFollow;
 
 @Component("IsfollowBoardVO")

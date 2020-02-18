@@ -17,16 +17,15 @@ public class MemberVOwithIsFollow {
 //	private String ;
 	private Date createdAt=null;
 //	@JsonInclude(JsonInclude.Include.)
-	private boolean isFollow;
+	private boolean isFollow = true;
+	
+
 	
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-//		return super.toString();
-		String info = id+", "+username+", "+password+", "+createdAt+", "+isFollow;
-		return info;
+		return "MemberVOwithIsFollow [id=" + id + ", username=" + username + ", password=" + password + ", createdAt="
+				+ createdAt + ", isFollow=" + isFollow + "]";
 	}
-	
 	public int getId() {
 		return id;
 	}

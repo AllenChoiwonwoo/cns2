@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.myspring.cns.board.dao.BoardDAO;
 import com.myspring.cns.board.vo.BoardVO;
 import com.myspring.cns.board.vo.FeedVO;
+import com.myspring.cns.board.vo.IsfollowBoardVO;
 import com.myspring.cns.member.dao.MemberDAO;
 import com.myspring.cns.member.vo.MemberVO;
 import com.myspring.cns.member.vo.TokenVO;
@@ -54,7 +55,7 @@ public class BoardService {
 		logger.info("addNewPost . followersId = "+followeersIds.toString());
 		int result = boardDAO.insertFeedData(followeersIds, tokenvo.getUserId(), boardId);
 		
-		logger.info("boardVO = "+boardVO.toString());
+		logger.info("addnewpost - result = "+result+", boardVO = "+boardVO.toString());
 		return boardVO;
 	}
 
@@ -78,7 +79,6 @@ public class BoardService {
 	private List<BoardVO> setMemberVOtoUserInBoardVOList(List<BoardVO> listBVO){
 		int i=0;
 		for (BoardVO bvo : listBVO) {
-
 			memberVO = memberDAO.getUserInfoById(bvo.getUserId()+"");
 			logger.info(memberVO.toString());
 			memberVO.setPassword(null);
@@ -121,10 +121,18 @@ public class BoardService {
 		// TODO Auto-generated method stub
 		tokenVO = memberDAO.selectUserIdByToken(accesstoken);
 		logger.info("getMyFeeds , userId = "+tokenVO.getUserId());
-		List resultList = boardDAO.selectFolloweesPosts(tokenVO.getUserId());//내가 팔로우 하는사람 글 가져오기
+		List<BoardVO> resultList = boardDAO.selectFolloweesPosts(tokenVO.getUserId());//내가 팔로우 하는사람 글 가져오기
 		
 //		List<BoardVO> bvoList = boardDAO.
 		return resultList;
+	}
+
+
+	public List<IsfollowBoardVO> getAllPostsWithIsfollow(String accesstoken) {
+		// TODO Auto-generated method stub
+		tokenVO = memberDAO.selectUserIdByToken(accesstoken);
+		List<IsfollowBoardVO> result = boardDAO.selectAllPostsWithIsFollow(tokenVO.getUserId());
+		return result;
 	}
 
 

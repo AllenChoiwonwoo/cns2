@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.myspring.cns.board.service.BoardService;
 import com.myspring.cns.board.vo.BoardVO;
+import com.myspring.cns.board.vo.IsfollowBoardVO;
 import com.myspring.cns.member.dao.MemberDAO;
 import com.myspring.cns.member.vo.MemberVO;
 import com.myspring.cns.member.vo.RestReturnMemberVO;
@@ -68,20 +68,32 @@ public class BoardController {
 				
 		return restReturnMemberVO;
 	}
+	// 모든 포스트 다 보여주기
 	@RequestMapping(value = "/post", method=RequestMethod.GET)
 	public RestReturnMemberVO getAllPost(
 //			@RequestBody BoardVO boardVO,
+			@CookieValue(value="accesstoken", required = false) String accesstoken,
 			HttpServletRequest request, HttpServletResponse response) {
-		
+		logger.info("getAllPost");
 		/***
 		 * 1. 요청을 받는다.
 		 * 2. 데이터베이스 에서 모든 글들을 id의 내림차순으로 가져온다.
 		 * 3. 화면에 뿌려준다.
 		 */
-		List<BoardVO> boardvoList = boardService.getAllPost();
-		logger.info(boardvoList.toString());
-		restReturnMemberVO.setData(boardvoList);
+//		만약 토큰이 함께 온다면 , 새로 만든 메서드로 해서 isfollow 를 넣어 보내주도록한다.
+		if(accesstoken == null) {
+			logger.info("getAllPost #@@- 토큰이 같이 호지 않았다.");
+		}else {
+			logger.info("getAllPost ###- 토큰이 왔다.");
+			List<IsfollowBoardVO> boardvoList = boardService.getAllPostsWithIsfollow(accesstoken);
+			restReturnMemberVO.setData(boardvoList);
+			return restReturnMemberVO;
+		}
 		
+		List<BoardVO> boardvoList = boardService.getAllPost();
+		logger.info("getAllPost" +boardvoList.toString());
+		restReturnMemberVO.setData(boardvoList);
+
 		return restReturnMemberVO;
 	}
 	
@@ -123,13 +135,14 @@ public class BoardController {
 	public RestReturnMemberVO getMyAllPost(
 			@CookieValue(value="accesstoken", required = false) String accesstoken,
 			HttpServletRequest request, HttpServletResponse response) {
+			logger.info("getMyAllPost");
 			
 //			String accessToken = request.getHeader("accesstoken");
 			logger.info("accessToken = "+accesstoken);
 		
 			List<BoardVO> myPostList = boardService.getMyAllPost(accesstoken);
 			restReturnMemberVO.setData(myPostList);
-		
+			
 		return restReturnMemberVO;
 	}
 	
@@ -139,7 +152,7 @@ public class BoardController {
 			@RequestHeader(value="accesstoken", required = false) String accesstoken
 //			,@RequestParam("followeeId") int followeeId
 			) 
-	{
+	{	logger.info( "get my feeds ");
 		/*- 내가 글을 쓰면 나를 팔로우 하고 있는 사람들의 feed 정보를 feed 테이블에 넣어주면 됨
 		 - 나의 글은 default로 feed에 입력 됨 --> 내 자신을 팔로우 하고 있다고 가정
 		 - 팔로우 하는 시점 부터 feed에 정보 입력
@@ -158,7 +171,10 @@ public class BoardController {
 	     -쿼리내의 연산으로 "isFollow : true" 값이 나올 수 있게 해야겠다.
 	     -그리고 결론적으로는 mybatis 에서 resultMap을 새로 설정해 postVO가 user를 품을 수 있게 해야겠다.
 		 */
-			List myFeedBVOs = boardService.getMyFeeds(accesstoken);//내가 팔로우 하는사람 글 가져오기
+//			if(accesstoken != null) { // 로그인 하고 로그인하면.
+//				boardService.get
+//			}
+			List<BoardVO> myFeedBVOs = boardService.getMyFeeds(accesstoken);//내가 팔로우 하는사람 글 가져오기
 		
 		
 

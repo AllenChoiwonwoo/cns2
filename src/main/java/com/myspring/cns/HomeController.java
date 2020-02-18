@@ -85,7 +85,7 @@ public class HomeController {
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 //		System.out.println("index method 실생됨");
 		logger.info("index method 실생됨");
-		String token = request.getHeader("accesstoken");
+//		String token = request.getHeader("accesstoken");
 //		request.getCookies();
 		Cookie[] getCookie = request.getCookies();
 		ModelAndView mav = new ModelAndView();

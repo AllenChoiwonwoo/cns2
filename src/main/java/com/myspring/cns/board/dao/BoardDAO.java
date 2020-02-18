@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.myspring.cns.board.vo.BoardVO;
 import com.myspring.cns.board.vo.FeedVO;
+import com.myspring.cns.board.vo.IsfollowBoardVO;
 import com.myspring.cns.member.vo.TokenVO;
 
 @Repository("BoardDAO")
@@ -63,9 +64,9 @@ public class BoardDAO {
 		return sqlSession.update(mybatisRocation+"updateOnePostById", boardVO2);
 	}
 
-	public List getFollowerIdListById(int userId) {
+	public List<FeedVO> getFollowerIdListById(int userId) {
 		logger.info("getFollowerIdListById. userid = "+userId);
-		List follewerIdList = sqlSession.selectList(mybatisRocation+"getFollowerIdListById", userId);
+		List<FeedVO> follewerIdList = sqlSession.selectList(mybatisRocation+"getFollowerIdListById", userId);
 		logger.info("getFollowerIdListById, list = "+follewerIdList.toString());
 		return follewerIdList;
 	}
@@ -84,9 +85,21 @@ public class BoardDAO {
 		return 0;
 	}
 
-	public List selectFolloweesPosts(int userId) {
+	public List<BoardVO> selectFolloweesPosts(int userId) {
 		// TODO Auto-generated method stub
-		List result = sqlSession.selectList(mybatisRocation+"selectFolloweesPosts", userId);
+		List<BoardVO> result = sqlSession.selectList(mybatisRocation+"selectFolloweesPosts", userId);
+		for (int i = 0; i < result.size(); i++) {
+			logger.info("-selectFolloweesPosts , result"+i+" = "+result.get(i).toString());
+		}
+		return result;
+	}
+
+	public List<IsfollowBoardVO> selectAllPostsWithIsFollow(int userId) {
+		// TODO Auto-generated method stub
+		List<IsfollowBoardVO> result = sqlSession.selectList(mybatisRocation+"selectAllPostsWithIsFollow", userId);
+		for (int i = 0; i < result.size(); i++) {
+			logger.info("-selectAllPostsWithIsFollow , result"+i+" = "+result.get(i).toString());
+		}
 		return result;
 	}
 	

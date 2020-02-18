@@ -18,7 +18,7 @@ $(document).ready(function(){
     				+ '</p> <a href="/post/detail/' + e.id 
     				+ '" class="btn btn-primary">Read More &rarr;</a> </div> ' 
     				+ '<div class="card-footer text-muted"> Posted on ' + e.createdAt.split('T')[0]
-    				+ ' by ' + e.user.username + getFollowInfo(e.user)
+    				+ ' by ' + e.user.username + getFollowInfo(e.user , e.id)
     				+ '</div> </div>');
     	});
        console.log(data);
@@ -26,12 +26,14 @@ $(document).ready(function(){
     	console.log(err.responseJSON);
     });
 	
-	function getFollowInfo(user) {
+	function getFollowInfo(user , id) {
 		if(user.isFollow) {// true : 팔로우 하고 있을때
+			
 			return ' <span class="unfollow" value="' + user.id + '" style="color:blue; cursor: pointer;"> Unfollow </span>';	
-		} else if(user.isFollow == null){
+		} else if(user.isFollow == null ){
 			return '';
 		} else { // false : 팔로우 안하고 있을때
+
 			return ' <span class="follow" value="' + user.id + '" style="color:blue; cursor: pointer;"> Follow </span>';
 		}
 		
@@ -52,7 +54,7 @@ $(document).ready(function(){
 	    				+ '</p> <a href="/post/detail/' + e.id 
 	    				+ '" class="btn btn-primary">Read More &rarr;</a> </div> ' 
 	    				+ '<div class="card-footer text-muted"> Posted on ' + e.createdAt.split('T')[0]
-	    				+ ' by ' + e.user.username + getFollowInfo(e.user)
+	    				+ ' by ' + e.user.username + getFollowInfo(e.user, e.id)
 	    				+ '</div> </div>');
 	    	});
 	       console.log(data);
