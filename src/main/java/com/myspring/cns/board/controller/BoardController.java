@@ -174,7 +174,7 @@ public class BoardController {
 //			if(accesstoken != null) { // 로그인 하고 로그인하면.
 //				boardService.get
 //			}
-			List<BoardVO> myFeedBVOs = boardService.getMyFeeds(accesstoken);//내가 팔로우 하는사람 글 가져오기
+			List<IsfollowBoardVO> myFeedBVOs = boardService.getMyFeeds(accesstoken);//내가 팔로우 하는사람 글 가져오기
 		
 		
 

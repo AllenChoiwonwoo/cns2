@@ -117,11 +117,11 @@ public class BoardService {
 	}
 
 
-	public List<BoardVO> getMyFeeds(String accesstoken) {
+	public List<IsfollowBoardVO> getMyFeeds(String accesstoken) {
 		// TODO Auto-generated method stub
 		tokenVO = memberDAO.selectUserIdByToken(accesstoken);
 		logger.info("getMyFeeds , userId = "+tokenVO.getUserId());
-		List<BoardVO> resultList = boardDAO.selectFolloweesPosts(tokenVO.getUserId());//내가 팔로우 하는사람 글 가져오기
+		List<IsfollowBoardVO> resultList = boardDAO.selectFolloweesPosts(tokenVO.getUserId());//내가 팔로우 하는사람 글 가져오기
 		
 //		List<BoardVO> bvoList = boardDAO.
 		return resultList;

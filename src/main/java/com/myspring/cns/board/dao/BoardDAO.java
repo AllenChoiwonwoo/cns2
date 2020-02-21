@@ -85,9 +85,10 @@ public class BoardDAO {
 		return 0;
 	}
 
-	public List<BoardVO> selectFolloweesPosts(int userId) {
+	public List<IsfollowBoardVO> selectFolloweesPosts(int userId) {
 		// TODO Auto-generated method stub
-		List<BoardVO> result = sqlSession.selectList(mybatisRocation+"selectFolloweesPosts", userId);
+		logger.info("-selectFolloweesPosts, userId = "+userId);
+		List<IsfollowBoardVO> result = sqlSession.selectList(mybatisRocation+"selectFolloweesPosts", userId);
 		for (int i = 0; i < result.size(); i++) {
 			logger.info("-selectFolloweesPosts , result"+i+" = "+result.get(i).toString());
 		}
